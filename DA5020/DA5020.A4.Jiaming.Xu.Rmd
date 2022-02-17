@@ -16,6 +16,7 @@ According to data set dictionary, VendorID, RateCodeID, Payment_type, Trip_type 
 
 ```{r}
 library(tidyverse)
+library(dplyr)
 df <- read_csv("https://s3.amazonaws.com/nyc-tlc/trip+data/green_tripdata_2020-02.csv")
 str(df)
 
@@ -24,7 +25,7 @@ df_clean <- df %>%
     mutate( pick_up_month = format( lpep_pickup_datetime, "%Y-%b")) %>% 
     mutate( drop_off_month = format( lpep_dropoff_datetime, "%Y-%b")) %>% 
     filter(  !( drop_off_month != "2020-Feb" & pick_up_month != "2020-Feb")) %>% 
-    select( -ehail_fee)
+    dplyr::select( -ehail_fee)
 
 df_clean
 ```
@@ -76,7 +77,7 @@ HourOfDay("2020-02-01 11:10:25")
 
 ## Q5 - Q6:
 
-I combine Q5 and Q6 together so that I can use pipe to manipulate and visualize data continuously. From the figure below, it shows that the median of trip distance in February is larger at 5 and 6 am in the morning.
+I combine Q5 and Q6 together so that I can use pipe to manipulate and visualize data continuously. From the figure below, it shows that the median of trip distance in February is larger at 5 and 6 am in the morning, taxi is high demanding for communicators!
 
 ```{r}
 df_clean %>% 

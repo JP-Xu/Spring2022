@@ -187,7 +187,8 @@ pre code {
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>df &lt;- read_csv(&quot;https://s3.amazonaws.com/nyc-tlc/trip+data/green_tripdata_2020-02.csv&quot;)</code></pre>
+<pre class="r"><code>library(dplyr)
+df &lt;- read_csv(&quot;https://s3.amazonaws.com/nyc-tlc/trip+data/green_tripdata_2020-02.csv&quot;)</code></pre>
 <pre><code>## Rows: 398632 Columns: 20</code></pre>
 <pre><code>## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -249,7 +250,7 @@ pre code {
     mutate( pick_up_month = format( lpep_pickup_datetime, &quot;%Y-%b&quot;)) %&gt;% 
     mutate( drop_off_month = format( lpep_dropoff_datetime, &quot;%Y-%b&quot;)) %&gt;% 
     filter(  !( drop_off_month != &quot;2020-Feb&quot; &amp; pick_up_month != &quot;2020-Feb&quot;)) %&gt;% 
-    select( -ehail_fee)
+    dplyr::select( -ehail_fee)
 
 df_clean</code></pre>
 <pre><code>## # A tibble: 398,614 × 21
@@ -313,7 +314,7 @@ HourOfDay(&quot;2020-02-01 11:10:25&quot;)</code></pre>
 </div>
 <div id="q5---q6" class="section level2">
 <h2>Q5 - Q6:</h2>
-<p>I combine Q5 and Q6 together so that I can use pipe to manipulate and visualize data continuously. From the figure below, it shows that the median of trip distance in February is larger at 5 and 6 am in the morning.</p>
+<p>I combine Q5 and Q6 together so that I can use pipe to manipulate and visualize data continuously. From the figure below, it shows that the median of trip distance in February is larger at 5 and 6 am in the morning, taxi is high demanding for communicators!</p>
 <pre class="r"><code>df_clean %&gt;% 
     mutate( lpep_pickup_hour = HourOfDay(lpep_pickup_datetime)) %&gt;% 
     group_by( lpep_pickup_hour) %&gt;% 
