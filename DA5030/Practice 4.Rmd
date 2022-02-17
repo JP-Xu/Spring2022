@@ -79,6 +79,36 @@ CrossTable(sms_test_pred2, sms_test_labels,
     dnn = c('predicted', 'actual'))
 ```
 
+# Q2:
+
+```{r}
+library(klaR)
+
+# Load iris data set
+data(iris)
+
+# display basic infomation of iris
+nrow(iris)
+summary(iris)
+head(iris)
+
+# Since the data set is randomly listed, simply pick every 5th rows as valid data set and rests as train data set.
+testidx <- which(1:length(iris[, 1]) %% 5 == 0)
+
+# Separate iris data set into a train and a test data set.
+iristrain <- iris[-testidx,]
+iristest <- iris[testidx,]
+
+# There are many available inputs for NaiveBayes function, but most of the time, at least for this practice, the only two inputs are 1. the labels and 2. data set. Here, I don't know what "~." mean as a suffix of Species column for grouping input, but it works just as it is.
+# The first step using naive bayes prediction is give hypothesis and data set to NaiveBayers function, then shoot predict function to compare results.
+nbmodel <- NaiveBayes(Species~., data=iristrain)
+
+# predict function it think take the prediction from NaiveBayers as input, iristest as validation set, and return the
+prediction <- predict(nbmodel, iristest[,-5])
+
+table(prediction$class, iristest[,5])
+
+```
 
 
 
